@@ -61,6 +61,13 @@ io.on("connection", (sock) => {
       sock.emit("boardState", chess.fen());
     }
   });
+
+  sock.on("resetGame", () => {
+  chess.reset();  
+  io.emit("resetGame", chess.fen()); 
+  io.emit("boardState", chess.fen()); 
+});
+
 });
 
 

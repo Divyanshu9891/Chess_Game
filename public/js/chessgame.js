@@ -85,6 +85,12 @@ const handleMove = (source, target) => {
   socket.emit("move", { from, to, promotion: "q" });
 };
 
+const resetBtn = document.getElementById("resetBtn");
+
+resetBtn.addEventListener("click", () => {
+  socket.emit("resetGame");
+});
+
 
 
 socket.on("playerRole", (role) => {
@@ -113,6 +119,12 @@ socket.on("move", (move) => {
 
 socket.on("invalidMove", (move) => {
   msgEl.textContent = `Invalid move: ${move.from} → ${move.to}`;
+});
+
+socket.on("resetGame", (fen) => {
+  chess.load(fen);
+  msgEl.textContent = "Game has been reset!";
+  renderBoard();
 });
 
 renderBoard();
